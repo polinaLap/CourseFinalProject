@@ -19,7 +19,8 @@ import java.util.Map;
 public class SuccessDAO extends AbstractDAO{
     final static Logger logger = Logger.getLogger(SuccessDAO.class);
     private final static String SET_PASSED_TEST = "insert into success (testname,studentemail, mark) values(?,?,?)";
-    private final static String GET_SUCCESS_BY_USER = "select testname,count(1), max(mark) from success where studentemail=? group by testname";
+    private final static String GET_SUCCESS_BY_USER = "select testname, mark from success where studentemail=?";
+    private final static String GET_SORTED_USERS = "select studentemail, avg(mark) as sr from success group by studentemail order by sr desc";
     public void setPassedTest(User student, Test test,int mark){
          Connection con = getConnection();
          if (con ==null) return;
@@ -39,10 +40,11 @@ public class SuccessDAO extends AbstractDAO{
              closeConnection(con);
          }
     }
-    public List<List<String>> getSuccess(User user){
-        List<List<String>> res = new ArrayList<>();
+    public boolean getSuccess(User user){
         Connection con = getConnection();
-        if (con ==null) return res;
+        if (con ==null) return false;
+        boolean res = true;
+        user.setSuccess(new Success());
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -50,11 +52,31 @@ public class SuccessDAO extends AbstractDAO{
             st.setString(1,user.getEmail());
             rs = st.executeQuery();
             while (rs.next()){
-                List<String> row = new ArrayList<>(3);
-                row.add(rs.getString(1));
-                row.add(rs.getString(2));
-                row.add(rs.getString(3));
-                res.add(row);
+                String testname = rs.getString(1);
+                int mark = rs.getInt(2);
+                user.getSuccess().addTestMark(new TestDAO().getTest(testname),mark);
+            }
+        }
+        catch (SQLException e){
+            logger.error(e.getMessage());
+            res=false;
+        }
+        finally {
+            closeConnection(con);
+        }
+        return  res;
+    }
+    public List<String> sortUsersBySuccess(){
+        List<String> res = new ArrayList<>();
+        Connection con = getConnection();
+        if (con ==null) return res;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement(GET_SORTED_USERS);
+            rs = st.executeQuery();
+            while (rs.next()){
+                res.add(rs.getString(1));
             }
         }
         catch (SQLException e){
@@ -63,6 +85,6 @@ public class SuccessDAO extends AbstractDAO{
         finally {
             closeConnection(con);
         }
-        return res;
+        return  res;
     }
 }

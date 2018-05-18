@@ -13,7 +13,7 @@
 </head>
 <body>
 <c:out value="${test.name}"/>
-
+${test.name}
 <form name="testForm" method="POST" action="controller">
     <fieldset>
     <input type="hidden" name="command" value="checkTest"/>
@@ -23,7 +23,7 @@
         <tr>
         <c:forEach var="answer" items="${question.answerVariants}">
             <td> <input type="radio"
-                        name=${question.question} value="${answer}">
+                        name=${question.id} value="${answer}">
                 <label for=${answer}>${answer}</label>
             </td>
         </c:forEach>
@@ -32,6 +32,9 @@
 </table>
     <input type="submit" value="Finish"/>
     </fieldset>
+</form>
+<form name="toTests" method="POST" action="user/tests">
+    <input type="submit" value="Back to tests"/>
 </form>
 
 </body>

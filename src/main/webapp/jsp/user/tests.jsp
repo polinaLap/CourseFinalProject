@@ -10,16 +10,20 @@
 <html>
 <head><title>Tests</title></head>
 <body>
-<c:out value="${sessionScope.user.name}" /><br/>
+<c:out value="${user.name}" /><br/>
 <form name="testsForm" method="POST" action="controller">
     <input type="hidden" name="command" value="chooseTest"/>
     <table>
     <c:forEach var="test" items="${sessionScope.testsList}">
-            <tr><td> <c:out value="${test[0]}"/> </td><td> <c:out value="${test[1]}"/> </td><td><input type="submit" name ="testName" value="${test[0]}"/><td/></tr>
-
+            <tr><td> <c:out value="${test[0]}"/> </td><td>
+                <c:out value="${test[1]}"/> </td><td>
+                <input type="submit" name ="testName" value="${test[0]}"/><td/></tr>
     </c:forEach>
 
 </table>
+</form>
+<form name="toMenu" method="POST" action="user/menu">
+    <input type="submit" value="Back to menu"/>
 </form>
 <form name="logout" method="POST" action="controller">
     <input type="hidden" name="command" value="logout"/>

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDAO extends AbstractDAO {
     final static Logger logger = Logger.getLogger(UserDAO.class);
@@ -60,5 +61,12 @@ public class UserDAO extends AbstractDAO {
         }
         return res;
     }
+    public User getUsersWithSuccess(String email){
+        User res= getUser(email);
+        new SuccessDAO().getSuccess(res);
+        return res;
+
+    }
+
 
 }

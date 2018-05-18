@@ -17,9 +17,10 @@ public class TestDAO extends AbstractDAO {
             "values(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String GET_TEST ="select * from tests where name=?";
     private static final String GET_ALL_TESTS ="select name, description from tests";
-    public void addTest(Test test){
+    public boolean addTest(Test test){
         Connection con = getConnection();
-        if (con ==null) return;
+        if (con ==null) return false;
+        boolean res = true;
         PreparedStatement testSt = null;
         try {
             con.setAutoCommit(false);
@@ -28,20 +29,23 @@ public class TestDAO extends AbstractDAO {
             testSt =con.prepareStatement(ADD_TEST);
             testSt.setString(1,test.getName());
             testSt.setString(2,test.getDescription());
-            PreparedStatement st = null;
             for (int i=0;i<10;i++) {
                 try{
                     if(i<test.getQuestions().size()){
-                        testSt.setInt(i+3,test.getQuestion(i).getId());
                         QuestionDAO q = new QuestionDAO();
-                        q.addQuestion(test.getQuestion(i), con);
+                        if(!q.addQuestion(test.getQuestion(i), con)) {
+                            res=false;
+                            break;
+                        }
+                        testSt.setInt(i+3,test.getQuestion(i).getId());
                     }
                     else{
-                        testSt.setNull(i+2,Types.INTEGER);
+                        testSt.setNull(i+3,Types.INTEGER);
                     }
                 }
                 catch (SQLException e){
                     logger.error(e.getMessage()+"  Executing rollback to savepoint.");
+                    res=false;
                 }
             }
             testSt.executeUpdate();
@@ -52,10 +56,12 @@ public class TestDAO extends AbstractDAO {
         }
         catch (SQLException e){
             logger.error(e.getMessage());
+            res=false;
         }
         finally {
             closeConnection(con);
         }
+        return res;
     }
     public Test getTest(String testName){
         Connection con = getConnection();
@@ -72,10 +78,14 @@ public class TestDAO extends AbstractDAO {
             while (rs.next()){
                 String description = rs.getString(2);
                 List<Question> questions = new ArrayList<>();
+                QuestionDAO q = new QuestionDAO();
                 for (int i = 0; i < 10; i++) {
-                    QuestionDAO q = new QuestionDAO();
+
                     Question quest = q.getQuestion(rs.getInt(i+3),con);
-                    if(quest!=null) questions.add(quest);
+                    if(quest!=null) {
+                        quest.setId(rs.getInt(i+3));
+                        questions.add(quest);
+                    }
                 }
                 res = new Test(testName,description,questions);
                 break;

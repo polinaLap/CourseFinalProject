@@ -12,20 +12,20 @@
     <title>Test</title>
 </head>
 <body>
+${user.name}
 <table width =500>
     <tr><td> Test </td>
-    <td> Count of attempts </td>
-    <td> Best mark </td>
+        <td> Count of attempts </td>
+    <td> Max mark </td>
     </tr>
-    <c:forEach var="test" items="${successList}">
-        <tr><td> ${test[0]} </td>
-            <td> ${test[1]} </td>
-            <td> ${test[2]} </td>
+    <c:forEach var="test" items="${user.success.success.keySet()}">
+        <tr><td> ${test.name} </td>
+            <td>${user.success.attemptCount(test)}</td>
+            <td>${user.success.maxMark(test)}</td>
         </tr>
     </c:forEach>
 </table>
-<form name="toTests" method="POST" action="controller">
-    <input type="hidden" name="command" value="toMenu"/>
+<form name="toMenu" method="POST" action="user/menu">
     <input type="submit" value="Back to menu"/>
 </form>
 <form name="logout" method="POST" action="controller">

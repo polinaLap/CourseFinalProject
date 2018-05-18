@@ -23,5 +23,11 @@
     <input type="submit" value="Show my success"/>
 
 </form>
+<br/>
+${error}<br/>
+<form name="logout" method="POST" action="controller">
+    <input type="hidden" name="command" value="logout"/>
+    <input type="submit" value="Log out"/>
+</form>
 </body>
 </html>

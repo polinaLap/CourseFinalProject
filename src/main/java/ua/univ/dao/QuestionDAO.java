@@ -9,16 +9,28 @@ import java.util.List;
 
 public class QuestionDAO extends AbstractDAO{
     final static Logger logger = Logger.getLogger(AbstractDAO.class);
-    private static final String ADD_QUESTION ="insert into questions (id, question, answer1,answer2,answer3,answer4, trueanswer) " +
+    private static final String ADD_QUESTION ="insert into questions (id,question, answer1,answer2,answer3,answer4, trueanswer) " +
             "values(?,?,?,?,?,?,?)";
     private static final String GET_QUESTION ="select * from questions where id=?";
+    private static final String GET_MAX_ID ="select max(id) from questions";
 
-    public void addQuestion(Question question, Connection con) {
-        if (con ==null) return;
+    public boolean addQuestion(Question question, Connection con) {
+        if (con ==null) return false;
+        boolean res = true;
         PreparedStatement st = null;
+        PreparedStatement st_id = null;
+        ResultSet rs = null;
         try {
+            st_id = con.prepareStatement(GET_MAX_ID);
+            rs=st_id.executeQuery();
+            int id = -1;
+            while (rs.next()){
+                id=rs.getInt(1)+1;
+                break;
+            }
+            question.setId(id);
             st = con.prepareStatement(ADD_QUESTION);
-            st.setInt(1,question.getId());
+            st.setInt(1,id);
             st.setString(2,question.getQuestion());
             for (int i = 0; i <4; i++) {
                 if(i<question.getAnswerVariants().size()){
@@ -26,13 +38,14 @@ public class QuestionDAO extends AbstractDAO{
                 }
                 else{ st.setNull(i+3,Types.NVARCHAR);}
             }
-            st.setInt(6,question.getIndexOfTrueAnswer());
+            st.setInt(7,question.getIndexOfTrueAnswer());
             st.executeUpdate();
-            logger.info("Add question "+question.getId()+" to database.");
         }
         catch (SQLException e){
             logger.error(e.getMessage());
+            res=false;
         }
+        return res;
     }
     public Question getQuestion(int id, Connection con){
         Question res =null;
@@ -49,7 +62,7 @@ public class QuestionDAO extends AbstractDAO{
                     String tmp =rs.getString(i+2);
                     if(tmp!=null)answers.add(tmp);
                 }
-                res = new Question(id,rs.getString(6),answers,rs.getInt(7));
+                res = new Question(rs.getString(6),answers,rs.getInt(7));
                 break;
             }
         }

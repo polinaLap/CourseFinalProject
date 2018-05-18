@@ -21,7 +21,7 @@ public class LoginCommand implements IActionCommand {
         User user = LoginService.checkLogin(login,pass);
         if(user!=null){
             request.getSession().setAttribute("user",user);
-            if(user.getType()==UserType.ADMIN) page = ConfigurationManager.getProperty("path.page.adminmain");
+            if(user.getType()==UserType.ADMIN) page = ConfigurationManager.getProperty("path.page.adminmenu");
             else{ page = ConfigurationManager.getProperty("path.page.menu");}
         }
         else{

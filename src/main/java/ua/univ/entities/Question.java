@@ -3,9 +3,12 @@ package ua.univ.entities;
 import java.util.List;
 
 public class Question {
-    private int id;
     private String question;
     private List<String> answerVariants;
+
+
+
+    private int id;
 
     public boolean isOkAnswer() {
         return okAnswer;
@@ -17,15 +20,13 @@ public class Question {
 
     private boolean okAnswer = false;
     private int indexOfTrueAnswer;
-    public Question(int id, String question, List<String> answerVariants, int indexOfTrueAnswer) {
-        this.id=id;
+    public Question( String question, List<String> answerVariants, int indexOfTrueAnswer) {
+
         this.question = question;
         this.answerVariants = answerVariants;
         this.indexOfTrueAnswer = indexOfTrueAnswer;
     }
-    public int getId() {
-        return id;
-    }
+
     public String getQuestion() {
         return question;
     }
@@ -37,7 +38,12 @@ public class Question {
     public int getIndexOfTrueAnswer() {
         return indexOfTrueAnswer;
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
         String res = question + '\n';

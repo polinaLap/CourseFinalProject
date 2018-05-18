@@ -26,11 +26,6 @@ public enum CommandEnum {
                 this.command = new CheckTestCommand();
             }
     },
-    TOMENU{
-        {
-            this.command = new ShowMenuCommand();
-        }
-    },
     TOTESTS{
         {
             this.command=new ShowTestsCommand();
@@ -39,6 +34,16 @@ public enum CommandEnum {
     TOUSERSUCCESS{
         {
             this.command= new ShowSuccessCommand();
+        }
+    },
+    TOTABLE{
+        {
+            this.command= new ShowTableCommand();
+        }
+    },
+    ADDTEST{
+        {
+            this.command= new AddTestCommand();
         }
     };
     IActionCommand command;
