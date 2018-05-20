@@ -10,32 +10,39 @@
 <html>
 <head>
     <title>Test</title>
+    <link href="<c:url value="/css/form.css" />" rel="stylesheet">
 </head>
 <body>
-<c:out value="${test.name}"/>
-${test.name}
-<form name="testForm" method="POST" action="controller">
-    <fieldset>
-    <input type="hidden" name="command" value="checkTest"/>
-<table>
-    <c:forEach var="question" items="${test.questions}">
-        <tr><td> <c:out value="${question.question}"/> </td></tr>
-        <tr>
-        <c:forEach var="answer" items="${question.answerVariants}">
-            <td> <input type="radio"
-                        name=${question.id} value="${answer}">
-                <label for=${answer}>${answer}</label>
-            </td>
-        </c:forEach>
-    </tr>
-    </c:forEach>
-</table>
-    <input type="submit" value="Finish"/>
-    </fieldset>
-</form>
-<form name="toTests" method="POST" action="user/tests">
-    <input type="submit" value="Back to tests"/>
-</form>
 
+<form class="form-container" name="testForm" method="POST" action="/controller">
+    <div class="form-title"><h2>${test.name}</h2></div>
+    <fieldset>
+        <input type="hidden" name="command" value="checkTest"/>
+
+             <c:forEach var="question" items="${test.questions}">
+                <div class="form-text-bold">${question.question}</div>
+        <table>
+                <tr>
+                    <c:forEach var="answer" items="${question.answerVariants}">
+                         <td>
+                             <div class="form-text">
+                                 <input type="radio" name=${question.id} value="${answer}">
+                                 <label for=${answer}>${answer}</label>
+                             </div>
+                         </td>
+                    </c:forEach>
+                </tr>
+        </table>
+             </c:forEach>
+
+        <div class="submit-container">
+            <input class="submit-button" type="submit" value="Finish" />
+        </div>
+    </fieldset>
+    <br/>
+    <div class="submit-container">
+        <a href="user/tests" class="submit-button">Back to tests</a>
+    </div>
+</form>
 </body>
 </html>

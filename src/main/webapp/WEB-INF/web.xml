@@ -101,7 +101,7 @@
 
     <servlet>
         <servlet-name>tests</servlet-name>
-        <jsp-file>/jsp/user/tests</jsp-file>
+        <jsp-file>/jsp/user/tests.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>tests</servlet-name>

@@ -12,7 +12,7 @@ public class ChooseTestCommand implements IActionCommand {
     public String execute(HttpServletRequest request) {
         String page = null;
         String testName = request.getParameter(PARAM_NAME_TEST);
-        Test test = TestService.getTest(testName);
+        Test test = new TestService().getTest(testName);
         request.getSession().setAttribute("test",test);
         request.setAttribute("test",test);
         page = ConfigurationManager.getProperty("path.page.test");

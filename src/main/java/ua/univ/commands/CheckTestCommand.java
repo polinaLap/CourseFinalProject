@@ -13,6 +13,7 @@ import java.util.List;
 public class CheckTestCommand implements IActionCommand {
     private static final String PARAM_NAME_TEST = "test";
     private static final String PARAM_NAME_MARK = "curMark";
+    private static final String PARAM_NAME_ANSWERS = "answers";
     @Override
     public String execute(HttpServletRequest request) {
         Test test = (Test)request.getSession().getAttribute(PARAM_NAME_TEST);
@@ -20,8 +21,9 @@ public class CheckTestCommand implements IActionCommand {
         for (Question q : test.getQuestions()) {
             answers.add(request.getParameter(String.valueOf(q.getId())));
         }
-        int mark = CheckTestService.check(test,answers, (User)request.getSession().getAttribute("user"));
+        int mark = new CheckTestService().check(test,answers, (User)request.getSession().getAttribute("user"));
         request.getSession().setAttribute(PARAM_NAME_TEST,test);
+        request.getSession().setAttribute(PARAM_NAME_ANSWERS,answers);
         request.getSession().setAttribute(PARAM_NAME_MARK,mark);
 
         return ConfigurationManager.getProperty("path.page.testresult");

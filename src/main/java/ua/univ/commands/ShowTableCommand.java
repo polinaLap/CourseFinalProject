@@ -12,7 +12,7 @@ public class ShowTableCommand implements IActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
-        List<User> table = ShowTableService.getTable(true);
+        List<User> table = new ShowTableService().getTable();
         if(!table.isEmpty()) {
             page = ConfigurationManager.getProperty("path.page.table");
             request.getSession().setAttribute("table", table);

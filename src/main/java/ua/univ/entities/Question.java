@@ -5,9 +5,6 @@ import java.util.List;
 public class Question {
     private String question;
     private List<String> answerVariants;
-
-
-
     private int id;
 
     public boolean isOkAnswer() {
@@ -44,12 +41,5 @@ public class Question {
     public void setId(int id) {
         this.id = id;
     }
-    @Override
-    public String toString() {
-        String res = question + '\n';
-        for (int i = 0; i < answerVariants.size(); i++) {
-            res+='\t'+(i+1)+") "+answerVariants.get(i)+'\n';
-        }
-        return res;
-    }
+
 }

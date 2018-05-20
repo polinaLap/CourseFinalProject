@@ -8,7 +8,7 @@ import ua.univ.entities.User;
 import java.util.List;
 
 public class CheckTestService {
-    public static int check(Test test, List<String> answers, User user){
+    public int check(Test test, List<String> answers, User user){
         int mark =0;
         for (int i = 0; i < test.getQuestions().size(); i++) {
             Question curQuest = test.getQuestion(i);

@@ -10,7 +10,7 @@ public class ShowTestsCommand implements IActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
         String page = ConfigurationManager.getProperty("path.page.tests");
-        request.getSession().setAttribute("testsList",TestListService.getTests());
+        request.getSession().setAttribute("testsList",new TestListService().getTests());
         return page;
     }
 }

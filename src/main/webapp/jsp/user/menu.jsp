@@ -10,24 +10,32 @@
 <html>
 <head>
     <title>Menu</title>
+    <link href="<c:url value="/css/form.css" />" rel="stylesheet">
 </head>
 <body>
-<c:out value="${user.name}"/>
-<form name="getTestsForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="totests"/>
-    <input type="submit" value="Show tests"/>
-
-</form>
-<form name="getSuccessForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="tousersuccess"/>
-    <input type="submit" value="Show my success"/>
-
-</form>
-<br/>
-${error}<br/>
-<form name="logout" method="POST" action="controller">
-    <input type="hidden" name="command" value="logout"/>
-    <input type="submit" value="Log out"/>
-</form>
+<div class="form-container">
+    <div class="form-title"><h2>Hello, ${user.name}!</h2></div>
+    <form method="POST" action="/controller">
+        <div class="submit-container-center">
+            <input type="hidden" name="command" value="totests"/>
+            <input class="submit-button" type="submit" value="Show tests"/>
+        </div>
+    </form>
+    <br/>
+    <form method="POST" action="/controller">
+    <div class="submit-container-center">
+        <input type="hidden" name="command" value="tousersuccess"/>
+        <input class="submit-button" type="submit" value="Show my success"/>
+    </div>
+    </form>
+    <br/>
+    <form method="POST" action="/controller">
+    <div class="submit-container-center">
+        <input type="hidden" name="command" value="logout"/>
+        <input class="submit-button" type="submit" value="Log out"/>
+    </div>
+    </form>
+    <div class="form-message">${error}</div>
+</div>
 </body>
 </html>

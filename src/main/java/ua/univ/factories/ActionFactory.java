@@ -8,6 +8,9 @@ package ua.univ.factories;
         import javax.servlet.http.HttpServletRequest;
 
 public class ActionFactory {
+    private static  ActionFactory instance = new ActionFactory();
+    private ActionFactory(){}
+    public static ActionFactory getInstance(){return instance; }
     public IActionCommand defineCommand(HttpServletRequest request){
         IActionCommand current = new EmptyCommand();
         String action = request.getParameter("command");

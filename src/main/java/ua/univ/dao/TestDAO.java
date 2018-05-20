@@ -80,7 +80,6 @@ public class TestDAO extends AbstractDAO {
                 List<Question> questions = new ArrayList<>();
                 QuestionDAO q = new QuestionDAO();
                 for (int i = 0; i < 10; i++) {
-
                     Question quest = q.getQuestion(rs.getInt(i+3),con);
                     if(quest!=null) {
                         quest.setId(rs.getInt(i+3));

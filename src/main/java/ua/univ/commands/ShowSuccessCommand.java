@@ -12,7 +12,7 @@ public class ShowSuccessCommand implements IActionCommand {
     public String execute(HttpServletRequest request) {
         String page=null;
         User cur_user = (User)request.getSession().getAttribute("user");
-        if(UserSuccessService.getSuccess(cur_user)){
+        if(new UserSuccessService().getSuccess(cur_user)){
         page = ConfigurationManager.getProperty("path.page.success");
         }
         else{

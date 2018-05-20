@@ -43,7 +43,7 @@ public class AddTestCommand implements IActionCommand{
             request.setAttribute("saved",
                     MessageManager.getProperty("message.inputerror"));
         }
-        else if(!AddTestService.add(test)){
+        else if(!(new AddTestService().add(test))){
             request.setAttribute("saved",
                     MessageManager.getProperty("message.databaseError"));
         }

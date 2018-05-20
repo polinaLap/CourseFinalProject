@@ -8,26 +8,42 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<head><title>Tests</title></head>
+<head>
+    <title>Tests</title>
+    <link href="<c:url value="/css/form.css" />" rel="stylesheet">
+</head>
 <body>
-<c:out value="${user.name}" /><br/>
-<form name="testsForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="chooseTest"/>
-    <table>
-    <c:forEach var="test" items="${sessionScope.testsList}">
-            <tr><td> <c:out value="${test[0]}"/> </td><td>
-                <c:out value="${test[1]}"/> </td><td>
-                <input type="submit" name ="testName" value="${test[0]}"/><td/></tr>
-    </c:forEach>
 
-</table>
-</form>
-<form name="toMenu" method="POST" action="user/menu">
-    <input type="submit" value="Back to menu"/>
-</form>
-<form name="logout" method="POST" action="controller">
-    <input type="hidden" name="command" value="logout"/>
-    <input type="submit" value="Log out"/>
-</form>
+<div class="form-container">
+    <table>
+        <tr><td><div class="form-text-bold">Test</div></td>
+            <td><div class="form-text-bold">Description</div></td>
+            <td></td></tr>
+    <c:forEach var="test" items="${sessionScope.testsList}">
+            <tr><td><div class="form-text">"${test[0]}"</div>  </td>
+                <td><div class="form-text">"${test[1]} </div></td>
+                <td>
+                    <form name="testsForm" method="POST" action="/controller">
+                        <input type="hidden" name="command" value="chooseTest"/>
+                        <div class="submit-container-center">
+                        <input type="hidden" name ="testName" value="${test[0]}"/>
+                        <input class="submit-button" type="submit" value="Pass"/>
+                    </div>
+                </form>
+                <td/>
+            </tr>
+    </c:forEach>
+    </table>
+    <div class="submit-container-center">
+        <a href="/user/menu" class="submit-button">To menu</a>
+    </div>
+        <br/>
+    <form name="testsForm" method="POST" action="/controller">
+        <div class="submit-container-center">
+            <input type="hidden" name="command" value="logout"/>
+            <input class="submit-button" type="submit" value="Log out"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

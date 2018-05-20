@@ -10,33 +10,39 @@
 <html>
 <head>
     <title>Table of success</title>
+    <link href="<c:url value="/css/form.css" />" rel="stylesheet">
 </head>
 <body>
-${user.name}
-<table width =500>
-    <tr><td> Name </td>
-        <td> email</td>
-        <td> Test</td>
-        <td> Average mark </td>
-    </tr>
-    <c:forEach var="cur_user" items="${table}">
-        <tr><td> ${cur_user.name} </td>
-            <td>${cur_user.email}</td>
-        <c:forEach var="test" items="${cur_user.success.success.keySet()}">
-            <tr><td> ${test.name} </td>
-                <td>${cur_user.success.attemptCount(test)}</td>
-                <td>${cur_user.success.averageMark(test)}</td>
+<div class="form-container">
+    <table>
+        <tr><td><div class="form-text-bold">Name</div></td>
+            <td><div class="form-text-bold">Email</div></td>
+            <td><div class="form-text-bold">Test</div></td>
+            <td><div class="form-text-bold">Average mark</div></td>
+            <td></td></tr>
+        <c:forEach var="cur_user" items="${table}">
+            <tr><td><div class="form-text">${cur_user.name}</div>  </td>
+                <td><div class="form-text">${cur_user.email} </div></td>
+                <td></td><td></td><td></td>
             </tr>
+            <c:forEach var="test" items="${cur_user.success.success.keySet()}">
+                <tr><td></td><td></td>
+                    <td><div class="form-text">${test.name}</div>  </td>
+                    <td><div class="form-text">${cur_user.success.averageMark(test)} </div></td>
+                </tr>
+            </c:forEach>
         </c:forEach>
-        </tr>
-    </c:forEach>
-</table>
-<form name="toAdminMenu" method="POST" action="admin/adminmenu">
-    <input type="submit" value="Back to menu"/>
-</form>
-<form name="logout" method="POST" action="controller">
-    <input type="hidden" name="command" value="logout"/>
-    <input type="submit" value="Log out"/>
-</form>
+    </table>
+    <div class="submit-container-center">
+        <a href="admin/adminmenu" class="submit-button">To menu</a>
+    </div>
+    <br/>
+    <form name="testsForm" method="POST" action="/controller">
+        <div class="submit-container-center">
+            <input type="hidden" name="command" value="logout"/>
+            <input class="submit-button" type="submit" value="Log out"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

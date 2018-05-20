@@ -7,7 +7,7 @@ import ua.univ.entities.UserType;
 public class LoginService {
 
     private static final String ADMIN_LOGIN = "admin@test.com";
-    public static User checkLogin(String enterLogin, String enterPass) {
+    public User checkLogin(String enterLogin, String enterPass) {
         UserDAO st = new UserDAO();
         User user = st.getUser(enterLogin);
         if(user==null||!user.getPassword().equals(enterPass)) return null;

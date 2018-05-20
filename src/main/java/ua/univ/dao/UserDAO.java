@@ -61,7 +61,7 @@ public class UserDAO extends AbstractDAO {
         }
         return res;
     }
-    public User getUsersWithSuccess(String email){
+    public User getUserWithSuccess(String email){
         User res= getUser(email);
         new SuccessDAO().getSuccess(res);
         return res;

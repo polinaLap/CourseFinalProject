@@ -8,18 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowTableService{
-    private static int countOnPage = 10;
-    private static int from=0;
+
      private static List<String> sortedUsers =new SuccessDAO().sortUsersBySuccess();
-     public static List<User> getTable(boolean next){
-         if(!next&&from>=countOnPage) from-=countOnPage;
-         List<User> res = new ArrayList<>(countOnPage);
+     public List<User> getTable(){
+         List<User> res = new ArrayList<>();
          UserDAO us = new UserDAO();
-         for (int i = 0; i <countOnPage&&i+from<sortedUsers.size(); i++) {
-             User cur = us.getUsersWithSuccess(sortedUsers.get(i+from));
+         for (int i = 0; i <sortedUsers.size(); i++) {
+             User cur = us.getUserWithSuccess(sortedUsers.get(i));
              res.add(cur);
          }
-         //from+=countOnPage;
          return res;
      }
 }

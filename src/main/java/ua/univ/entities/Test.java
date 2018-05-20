@@ -36,18 +36,9 @@ public class Test {
         Test test = (Test) o;
         return Objects.equals(name, test.name);
     }
-
     @Override
     public int hashCode() {
         return name.hashCode();
     }
 
-    @Override
-    public String toString() {
-        String res = name+'\n';
-        for (int i = 0; i <questions.size() ; i++) {
-            res+=(i+1)+". "+questions.get(i).toString();
-        }
-        return res;
-    }
 }

@@ -64,6 +64,7 @@ public class SuccessDAO extends AbstractDAO{
         finally {
             closeConnection(con);
         }
+        if(!res) user.setSuccess(new Success());
         return  res;
     }
     public List<String> sortUsersBySuccess(){

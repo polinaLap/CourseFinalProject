@@ -20,7 +20,7 @@ public class RegistrateCommand implements IActionCommand {
             request.setAttribute("errorLoginPassMessage",
                     MessageManager.getProperty("message.loginerror"));
         }
-        else if(!RegistrateService.registrate(name,email,password)) {
+        else if(! new RegistrateService().registrate(name,email,password)) {
             request.setAttribute("errorLoginPassMessage",
                     MessageManager.getProperty("message.alreadyExists"));
         }

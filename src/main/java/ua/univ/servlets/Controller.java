@@ -23,7 +23,7 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
-        ActionFactory client = new ActionFactory();
+        ActionFactory client = ActionFactory.getInstance();
         IActionCommand command = client.defineCommand(request);
         page = command.execute(request);
         if(page!=null){
