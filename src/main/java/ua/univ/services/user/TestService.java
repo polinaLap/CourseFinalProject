@@ -1,4 +1,4 @@
-package ua.univ.services;
+package ua.univ.services.user;
 
 import ua.univ.dao.TestDAO;
 import ua.univ.entities.Test;

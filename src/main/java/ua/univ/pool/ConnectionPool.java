@@ -1,5 +1,8 @@
 package ua.univ.pool;
 
+import ua.univ.resource.DataSource;
+
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,10 +10,11 @@ import java.util.Vector;
 
 public class ConnectionPool {
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
-    private final static String connectionString = "jdbc:mysql://localhost:3306/studentstesting" +
-            "?verifyServerCertificate=false&useSSL=false&requireSSL=false&useLegacyDatetimeCode=false&amp&serverTimezone=UTC";
-    private final static String user = "root";
-    private final static String password="2585";
+
+
+    private static String connectionString = DataSource.getProperty("connectionString");
+    private static String user = DataSource.getProperty("login");
+    private static String password=DataSource.getProperty("password");
     private final int initialConnections = 5;
     private Vector connectionsAvailable = new Vector();
     private Vector connectionsUsed = new Vector();
@@ -54,9 +58,16 @@ public class ConnectionPool {
         }
         return newConnection;
     }
+    public static void setConnectionString(String connectionString) {
+        ConnectionPool.connectionString = connectionString;
+    }
 
-    public int availableCount() {
-        return connectionsAvailable.size();
+    public static void setUser(String user) {
+        ConnectionPool.user = user;
+    }
+
+    public static void setPassword(String password) {
+        ConnectionPool.password = password;
     }
 
 }

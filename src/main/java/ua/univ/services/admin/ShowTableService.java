@@ -1,4 +1,4 @@
-package ua.univ.services;
+package ua.univ.services.admin;
 
 import ua.univ.dao.SuccessDAO;
 import ua.univ.dao.UserDAO;

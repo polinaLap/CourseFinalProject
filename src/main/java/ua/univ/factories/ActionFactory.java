@@ -2,7 +2,7 @@ package ua.univ.factories;
 
         import ua.univ.commands.IActionCommand;
         import ua.univ.commands.CommandEnum;
-        import ua.univ.commands.EmptyCommand;
+        import ua.univ.commands.common.EmptyCommand;
         import ua.univ.resource.MessageManager;
 
         import javax.servlet.http.HttpServletRequest;

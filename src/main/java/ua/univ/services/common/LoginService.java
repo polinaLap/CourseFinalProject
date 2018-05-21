@@ -1,12 +1,13 @@
-package ua.univ.services;
+package ua.univ.services.common;
 
 import ua.univ.dao.UserDAO;
 import ua.univ.entities.User;
 import ua.univ.entities.UserType;
+import ua.univ.resource.DataSource;
 
 public class LoginService {
 
-    private static final String ADMIN_LOGIN = "admin@test.com";
+    private static final String ADMIN_LOGIN = DataSource.getProperty("adminEmail");
     public User checkLogin(String enterLogin, String enterPass) {
         UserDAO st = new UserDAO();
         User user = st.getUser(enterLogin);

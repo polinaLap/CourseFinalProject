@@ -12,6 +12,16 @@ public class Success implements Comparable<Success>{
         }
         return ((float)sum)/success.get(test).size();
     }
+    public float averageMark(){
+        int sum =0;
+        int n=0;
+        for (Test test:success.keySet()) {
+        for (int mark: success.get(test)){
+            sum+=mark;n++;
+        }
+        }
+        return ((float)sum)/n;
+    }
     public int maxMark(Test test){
 
         return Collections.max(success.get(test));

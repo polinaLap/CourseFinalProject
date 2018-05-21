@@ -21,9 +21,11 @@ public class SuccessDAO extends AbstractDAO{
     private final static String SET_PASSED_TEST = "insert into success (testname,studentemail, mark) values(?,?,?)";
     private final static String GET_SUCCESS_BY_USER = "select testname, mark from success where studentemail=?";
     private final static String GET_SORTED_USERS = "select studentemail, avg(mark) as sr from success group by studentemail order by sr desc";
-    public void setPassedTest(User student, Test test,int mark){
+    public boolean setPassedTest(User student, Test test,int mark){
+         if(student==null) return false;
          Connection con = getConnection();
-         if (con ==null) return;
+         if (con ==null) return false;
+         boolean res=true;
          PreparedStatement st = null;
          try {
              st = con.prepareStatement(SET_PASSED_TEST);
@@ -34,11 +36,12 @@ public class SuccessDAO extends AbstractDAO{
              logger.info("Add success to student "+student.getEmail()+" to database.");
          }
          catch (SQLException e){
-             logger.error(e.getMessage());
+             logger.error(e.getMessage()); res=false;
          }
          finally {
              closeConnection(con);
          }
+         return res;
     }
     public boolean getSuccess(User user){
         Connection con = getConnection();

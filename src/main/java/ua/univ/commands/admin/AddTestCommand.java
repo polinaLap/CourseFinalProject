@@ -1,17 +1,18 @@
-package ua.univ.commands;
+package ua.univ.commands.admin;
 
-import ua.univ.dao.TestDAO;
+import ua.univ.commands.IActionCommand;
 import ua.univ.entities.Question;
 import ua.univ.entities.Test;
+import ua.univ.factories.ServiceFactory;
 import ua.univ.resource.ConfigurationManager;
 import ua.univ.resource.MessageManager;
-import ua.univ.services.AddTestService;
+import ua.univ.services.admin.AddTestService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddTestCommand implements IActionCommand{
+public class AddTestCommand implements IActionCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -43,7 +44,7 @@ public class AddTestCommand implements IActionCommand{
             request.setAttribute("saved",
                     MessageManager.getProperty("message.inputerror"));
         }
-        else if(!(new AddTestService().add(test))){
+        else if(!(ServiceFactory.getInstance().getAddTestService().add(test))){
             request.setAttribute("saved",
                     MessageManager.getProperty("message.databaseError"));
         }

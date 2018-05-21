@@ -28,8 +28,8 @@
         <div class="submit-container">
         <a href="registration" class="submit-button">Registration</a>
         </div>
+    <div class="form-message">${nullPage}</div>
 </form>
 
-<div class="form-message">${nullPage}</div>
 </body>
 </html>

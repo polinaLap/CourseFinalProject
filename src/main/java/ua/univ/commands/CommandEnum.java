@@ -1,5 +1,11 @@
 package ua.univ.commands;
 
+import ua.univ.commands.admin.AddTestCommand;
+import ua.univ.commands.admin.ShowTableCommand;
+import ua.univ.commands.common.LoginCommand;
+import ua.univ.commands.common.LogoutCommand;
+import ua.univ.commands.user.*;
+
 public enum CommandEnum {
     LOGIN{
         {

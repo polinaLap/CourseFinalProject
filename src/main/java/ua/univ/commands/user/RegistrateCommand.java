@@ -1,8 +1,10 @@
-package ua.univ.commands;
+package ua.univ.commands.user;
 
+import ua.univ.commands.IActionCommand;
+import ua.univ.factories.ServiceFactory;
 import ua.univ.resource.ConfigurationManager;
 import ua.univ.resource.MessageManager;
-import ua.univ.services.RegistrateService;
+import ua.univ.services.common.RegistrateService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +22,7 @@ public class RegistrateCommand implements IActionCommand {
             request.setAttribute("errorLoginPassMessage",
                     MessageManager.getProperty("message.loginerror"));
         }
-        else if(! new RegistrateService().registrate(name,email,password)) {
+        else if(! ServiceFactory.getInstance().getRegistrateService().registrate(name,email,password)) {
             request.setAttribute("errorLoginPassMessage",
                     MessageManager.getProperty("message.alreadyExists"));
         }

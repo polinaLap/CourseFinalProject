@@ -8,11 +8,7 @@ td{
     max-width: 200px;
 }
 .form-container {
-    left: 50%;
-    top: 50%;
-    margin-left: -15%;
-    position: absolute;
-    margin-top: -20%;
+    margin: 20px auto;
     border: 1px solid #f2e3d2;
     background: #c9b7a2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f2e3d2), to(#c9b7a2));

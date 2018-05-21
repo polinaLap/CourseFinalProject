@@ -1,5 +1,6 @@
-package ua.univ.commands;
+package ua.univ.commands.common;
 
+import ua.univ.commands.IActionCommand;
 import ua.univ.resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;

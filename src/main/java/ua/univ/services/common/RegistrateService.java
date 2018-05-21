@@ -1,4 +1,4 @@
-package ua.univ.services;
+package ua.univ.services.common;
 
 import ua.univ.dao.UserDAO;
 import ua.univ.entities.User;

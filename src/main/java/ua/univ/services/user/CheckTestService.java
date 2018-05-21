@@ -1,4 +1,4 @@
-package ua.univ.services;
+package ua.univ.services.user;
 
 import ua.univ.dao.SuccessDAO;
 import ua.univ.entities.Question;
@@ -18,7 +18,7 @@ public class CheckTestService {
                 mark++;}
             else curQuest.setOkAnswer(false);
         }
-        new SuccessDAO().setPassedTest(user,test,mark);
+        if(!new SuccessDAO().setPassedTest(user,test,mark)) mark=-1;
         return mark;
     }
 }

@@ -43,6 +43,8 @@
     <div class="submit-container">
         <a href="user/tests" class="submit-button">Back to tests</a>
     </div>
+
+    <div class="form-message">${testError}</div>
 </form>
 </body>
 </html>
