@@ -4,6 +4,7 @@ import ua.univ.commands.admin.AddTestCommand;
 import ua.univ.commands.admin.ShowTableCommand;
 import ua.univ.commands.common.LoginCommand;
 import ua.univ.commands.common.LogoutCommand;
+import ua.univ.commands.common.RegistrateCommand;
 import ua.univ.commands.user.*;
 
 public enum CommandEnum {

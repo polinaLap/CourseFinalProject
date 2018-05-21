@@ -6,7 +6,7 @@ import ua.univ.entities.User;
 import ua.univ.entities.UserType;
 import ua.univ.factories.ServiceFactory;
 import ua.univ.pool.ConnectionPool;
-import ua.univ.resource.DataSource;
+import ua.univ.resource.DataSourceManager;
 import ua.univ.services.common.LoginService;
 import static org.junit.Assert.*;
 
@@ -15,9 +15,9 @@ public class TestLoginService {
     private LoginService ls = ServiceFactory.getInstance().getLoginService();
     @Before
     public void start(){
-        pool.setConnectionString(DataSource.getProperty("testConnectionString"));
-        pool.setUser(DataSource.getProperty("testLogin"));
-        pool.setPassword(DataSource.getProperty("testPassword"));
+        pool.setConnectionString(DataSourceManager.getProperty("testConnectionString"));
+        pool.setUser(DataSourceManager.getProperty("testLogin"));
+        pool.setPassword(DataSourceManager.getProperty("testPassword"));
     }
     @Test
     public void testUser_ok(){
@@ -31,7 +31,7 @@ public class TestLoginService {
     }
     @Test
     public void testAdmin_ok(){
-        User user = ls.checkLogin(DataSource.getProperty("adminEmail"),DataSource.getProperty("adminPassword"));
+        User user = ls.checkLogin(DataSourceManager.getProperty("adminEmail"),DataSourceManager.getProperty("adminPassword"));
         assertEquals(UserType.ADMIN,user.getType());
     }
 

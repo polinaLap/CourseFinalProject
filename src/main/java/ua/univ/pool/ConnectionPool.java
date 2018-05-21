@@ -1,8 +1,7 @@
 package ua.univ.pool;
 
-import ua.univ.resource.DataSource;
+import ua.univ.resource.DataSourceManager;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,9 +11,9 @@ public class ConnectionPool {
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
 
 
-    private static String connectionString = DataSource.getProperty("connectionString");
-    private static String user = DataSource.getProperty("login");
-    private static String password=DataSource.getProperty("password");
+    private static String connectionString = DataSourceManager.getProperty("connectionString");
+    private static String user = DataSourceManager.getProperty("login");
+    private static String password=DataSourceManager.getProperty("password");
     private final int initialConnections = 5;
     private Vector connectionsAvailable = new Vector();
     private Vector connectionsUsed = new Vector();

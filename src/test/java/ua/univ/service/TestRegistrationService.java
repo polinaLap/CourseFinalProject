@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.univ.factories.ServiceFactory;
 import ua.univ.pool.ConnectionPool;
-import ua.univ.resource.DataSource;
+import ua.univ.resource.DataSourceManager;
 import static org.junit.Assert.*;
 import ua.univ.services.common.RegistrateService;
 
@@ -13,9 +13,9 @@ public class TestRegistrationService {
     private RegistrateService rs = ServiceFactory.getInstance().getRegistrateService();
     @Before
     public void start(){
-        pool.setConnectionString(DataSource.getProperty("testConnectionString"));
-        pool.setUser(DataSource.getProperty("testLogin"));
-        pool.setPassword(DataSource.getProperty("testPassword"));
+        pool.setConnectionString(DataSourceManager.getProperty("testConnectionString"));
+        pool.setUser(DataSourceManager.getProperty("testLogin"));
+        pool.setPassword(DataSourceManager.getProperty("testPassword"));
     }
     @Test
     public void testRegistrate_ok(){
