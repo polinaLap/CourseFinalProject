@@ -25,8 +25,9 @@ public class CheckTestCommand implements IActionCommand {
         for (Question q : test.getQuestions()) {
             answers.add(request.getParameter(String.valueOf(q.getId())));
         }
-        int mark = ServiceFactory.getInstance().getCheckTestService().check(test,answers, (User)request.getSession().getAttribute("user"));
-        if(mark>0){
+        int mark = ServiceFactory.getInstance().getCheckTestService().check(test,answers,
+                (User)request.getSession().getAttribute("user"));
+        if(mark>=0){
         request.getSession().setAttribute(PARAM_NAME_TEST,test);
         request.getSession().setAttribute(PARAM_NAME_ANSWERS,answers);
         request.getSession().setAttribute(PARAM_NAME_MARK,mark);

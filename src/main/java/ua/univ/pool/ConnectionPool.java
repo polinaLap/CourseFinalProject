@@ -14,7 +14,7 @@ public class ConnectionPool {
     private static String connectionString = DataSourceManager.getProperty("connectionString");
     private static String user = DataSourceManager.getProperty("login");
     private static String password=DataSourceManager.getProperty("password");
-    private final int initialConnections = 5;
+    private static final int initialConnections=5;
     private Vector connectionsAvailable = new Vector();
     private Vector connectionsUsed = new Vector();
     private static ConnectionPool instance = new ConnectionPool();
@@ -50,9 +50,7 @@ public class ConnectionPool {
             connectionsUsed.addElement(newConnection);
         } else {
             newConnection = (Connection) connectionsAvailable.lastElement();
-
             connectionsAvailable.removeElement(newConnection);
-
             connectionsUsed.addElement(newConnection);
         }
         return newConnection;

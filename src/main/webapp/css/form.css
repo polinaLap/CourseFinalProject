@@ -8,7 +8,7 @@ td{
     max-width: 200px;
 }
 .form-container {
-    margin: 20px auto;
+    margin: 50px auto;
     border: 1px solid #f2e3d2;
     background: #c9b7a2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f2e3d2), to(#c9b7a2));
@@ -29,6 +29,7 @@ td{
     min-width:300px;
     padding:20px;
     max-width:900px;
+
 }
 .form-field {
     border: 1px solid #c9b7a2;
@@ -102,11 +103,11 @@ td{
 }
 .submit-container {
     margin:8px 0;
-    text-align:right;
+    text-align:left;
 }
 .submit-container-center {
     margin:8px 0;
-    text-align: center;
+    text-align: left;
 }
 .submit-button {
     border: 1px solid #447314;

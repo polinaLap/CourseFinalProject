@@ -11,6 +11,7 @@ import ua.univ.services.common.LoginService;
 import static org.junit.Assert.*;
 
 public class TestLoginService {
+
     private static ConnectionPool pool=ConnectionPool.getInstance();
     private LoginService ls = ServiceFactory.getInstance().getLoginService();
     @Before
@@ -34,5 +35,4 @@ public class TestLoginService {
         User user = ls.checkLogin(DataSourceManager.getProperty("adminEmail"),DataSourceManager.getProperty("adminPassword"));
         assertEquals(UserType.ADMIN,user.getType());
     }
-
 }

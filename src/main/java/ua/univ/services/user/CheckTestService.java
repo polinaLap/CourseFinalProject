@@ -4,10 +4,13 @@ import ua.univ.dao.SuccessDAO;
 import ua.univ.entities.Question;
 import ua.univ.entities.Test;
 import ua.univ.entities.User;
+import ua.univ.exceptions.DataBaseException;
+import ua.univ.factories.DAOFactory;
 
 import java.util.List;
 
 public class CheckTestService {
+    private static final DAOFactory daoFactory=DAOFactory.getInstance();
     public int check(Test test, List<String> answers, User user){
         int mark =0;
         for (int i = 0; i < test.getQuestions().size(); i++) {
@@ -18,7 +21,12 @@ public class CheckTestService {
                 mark++;}
             else curQuest.setOkAnswer(false);
         }
-        if(!new SuccessDAO().setPassedTest(user,test,mark)) mark=-1;
+        try{
+            daoFactory.getSuccessDAO().setPassedTest(user,test,mark);
+        }
+        catch (DataBaseException e){
+            return -1;
+        }
         return mark;
     }
 }

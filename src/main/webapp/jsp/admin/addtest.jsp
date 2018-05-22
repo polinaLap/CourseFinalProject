@@ -15,7 +15,7 @@
 <body>
 <div class="form-container">
     <fieldset>
-    <form name="newTestForm" method="POST" action="controller">
+    <form name="newTestForm" method="POST" action="/controller">
     <input type="hidden" name="command" value="addTest"/>
         <div class="form-title">Test:</div>
     <input class="form-field" type="text" name="testname" value="" required><br/>

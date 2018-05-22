@@ -21,7 +21,7 @@
             <td><div class="form-text-bold">Max mark</div></td>
             <td></td></tr>
         <c:forEach var="test" items="${user.success.success.keySet()}">
-            <tr><td><div class="form-text">${test.name}</div>  </td>
+            <tr><td><div class="form-text">${test}</div>  </td>
                 <td><div class="form-text">${user.success.attemptCount(test)} </div></td>
                 <td><div class="form-text">${user.success.maxMark(test)} </div></td>
             </tr>

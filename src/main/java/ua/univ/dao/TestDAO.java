@@ -3,107 +3,93 @@ package ua.univ.dao;
 import org.apache.log4j.Logger;
 import ua.univ.entities.Question;
 import ua.univ.entities.Test;
+import ua.univ.exceptions.DataBaseException;
 import ua.univ.pool.ConnectionPool;
+import ua.univ.transaction.Transaction;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class TestDAO extends AbstractDAO {
+public class TestDAO {
     final static Logger logger = Logger.getLogger(TestDAO.class);
+    final static int maxQuestionCount=10;
     private static final String ADD_TEST = "insert into tests " +
-            "(name, description, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10) " +
+            "(name, description, question1, question2, question3, question4, question5," +
+            " question6, question7, question8, question9, question10) " +
             "values(?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String GET_TEST ="select * from tests where name=?";
+    private static final String GET_TEST_DESCRIPTION ="select description from tests where name=?";
+    private static final String GET_TEST_QUESTIONS_IDS ="select question1, question2, question3," +
+            " question4, question5, question6, question7, question8, question9, question10 from tests where name=?";
     private static final String GET_ALL_TESTS ="select name, description from tests";
-    public boolean addTest(Test test){
-        Connection con = getConnection();
-        if (con ==null) return false;
+    public void addTest(Test test) throws DataBaseException {
+        Connection con = Transaction.getConnection();
         boolean res = true;
-        PreparedStatement testSt = null;
+        PreparedStatement st = null;
         try {
-            con.setAutoCommit(false);
-            con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            Savepoint savepoint = con.setSavepoint("savePoint");
-            testSt =con.prepareStatement(ADD_TEST);
-            testSt.setString(1,test.getName());
-            testSt.setString(2,test.getDescription());
-            for (int i=0;i<10;i++) {
-                try{
-                    if(i<test.getQuestions().size()){
-                        QuestionDAO q = new QuestionDAO();
-                        if(!q.addQuestion(test.getQuestion(i), con)) {
-                            res=false;
-                            break;
-                        }
-                        testSt.setInt(i+3,test.getQuestion(i).getId());
-                    }
-                    else{
-                        testSt.setNull(i+3,Types.INTEGER);
-                    }
-                }
-                catch (SQLException e){
-                    logger.error(e.getMessage()+"  Executing rollback to savepoint.");
-                    res=false;
-                }
+            st =con.prepareStatement(ADD_TEST);
+            st.setString(1,test.getName());
+            st.setString(2,test.getDescription());
+            for (int i=0;i<maxQuestionCount;i++) {
+                if(i<test.getQuestions().size())st.setInt(i+3,test.getQuestion(i).getId());
+                else st.setNull(i+3,Types.INTEGER);
             }
-            testSt.executeUpdate();
-            con.commit();
-            con.releaseSavepoint(savepoint);
+            st.executeUpdate();
             logger.info("Add test "+test.getName());
-
         }
         catch (SQLException e){
             logger.error(e.getMessage());
-            res=false;
+            throw new DataBaseException(e);
         }
-        finally {
-            closeConnection(con);
-        }
-        return res;
+
     }
-    public Test getTest(String testName){
-        Connection con = getConnection();
-        Test res = null;
-        if (con ==null) return res;
+    public String getTestDescription(String testName) throws DataBaseException {
+        Connection con = Transaction.getConnection();
+        String description ="";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            con.setAutoCommit(false);
-            con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            st =con.prepareStatement(GET_TEST);
+            st =con.prepareStatement(GET_TEST_DESCRIPTION);
             st.setString(1,testName);
             rs = st.executeQuery();
             while (rs.next()){
-                String description = rs.getString(2);
-                List<Question> questions = new ArrayList<>();
-                QuestionDAO q = new QuestionDAO();
-                for (int i = 0; i < 10; i++) {
-                    Question quest = q.getQuestion(rs.getInt(i+3),con);
-                    if(quest!=null) {
-                        quest.setId(rs.getInt(i+3));
-                        questions.add(quest);
-                    }
-                }
-                res = new Test(testName,description,questions);
+                description=rs.getString(1);
                 break;
             }
-            con.commit();
-
         }
         catch (SQLException e){
             logger.error(e.getMessage());
+            throw new DataBaseException(e);
         }
-        finally {
-            closeConnection(con);
-        }
-        return  res;
+
+        return  description;
     }
-    public List<List<String>> getAllTests(){
+    public List<Integer> getQuestionIds(String testName) throws DataBaseException {
+        Connection con = Transaction.getConnection();
+        List<Integer> result = new ArrayList<>();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st =con.prepareStatement(GET_TEST_QUESTIONS_IDS);
+            st.setString(1,testName);
+            rs = st.executeQuery();
+            while (rs.next()){
+                for (int i = 0; i < maxQuestionCount; i++) {
+                    if(rs.getObject(i+1)!=null) result.add(rs.getInt(i+1));
+                }
+                break;
+            }
+        }
+        catch (SQLException e){
+            logger.error(e.getMessage());
+            throw new DataBaseException(e);
+        }
+        return  result;
+    }
+    public List<List<String>> getAllTests() throws DataBaseException {
         List<List<String>> res =new ArrayList<>();
-        Connection con = pool.connectionCheck();
-        if (con ==null) return res;
+        Connection con = Transaction.getConnection();
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -118,10 +104,9 @@ public class TestDAO extends AbstractDAO {
         }
         catch (SQLException e){
             logger.error(e.getMessage());
+            throw new DataBaseException(e);
         }
-        finally {
-            closeConnection(con);
-        }
+
         return res;
     }
 

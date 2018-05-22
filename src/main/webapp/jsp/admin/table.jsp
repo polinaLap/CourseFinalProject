@@ -19,15 +19,17 @@
             <td><div class="form-text-bold">Email</div></td>
             <td><div class="form-text-bold">Test</div></td>
             <td><div class="form-text-bold">Average mark</div></td>
-            <td></td></tr>
+            <td><div class="form-text-bold">Total mark</div></td>
+        </tr>
         <c:forEach var="cur_user" items="${table}">
             <tr><td><div class="form-text">${cur_user.name}</div>  </td>
                 <td><div class="form-text">${cur_user.email} </div></td>
-                <td></td><td></td><td></td>
+                <td></td><td></td>
+                <td><div class="form-text">${cur_user.success.averageMark()}</div></td>
             </tr>
             <c:forEach var="test" items="${cur_user.success.success.keySet()}">
                 <tr><td></td><td></td>
-                    <td><div class="form-text">${test.name}</div>  </td>
+                    <td><div class="form-text">${test}</div>  </td>
                     <td><div class="form-text">${cur_user.success.averageMark(test)} </div></td>
                 </tr>
             </c:forEach>
